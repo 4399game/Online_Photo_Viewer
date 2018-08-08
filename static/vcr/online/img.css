@@ -1,0 +1,73 @@
+#use > wide{
+    height: 1px;
+}
+.col_out{
+    padding: 10px 10px 0 10px;
+}
+.cover{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    border: 5px solid rgba(255, 255, 255, 0.3819);
+}
+.choise_border{
+    border: 5px solid #ffaec8;
+}
+.img_div{
+    z-index: 80;
+    transition: all 0.5s;
+}
+.img_div:hover{
+    -webkit-transform: scale(1.0618);
+    -moz-transform: scale(1.0618);
+    -o-transform: scale(1.0618);
+    transform: scale(1.0618);
+}
+.the_img{
+    z-index: 50;
+    -webkit-box-shadow: 2px 2px 6px -1px #ffaec8;
+    -moz-box-shadow: 2px 2px 6px -1px #ffaec8;
+    box-shadow:2px 2px 6px -1px #ffaec8;
+}
+.the_tooltip{
+    word-break: break-all;
+}
+.img_grid{
+}
+.opt_img_div{
+    z-index: 200;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.618);
+    color: white;
+    padding: 15px 15px 15px 15px;
+
+    transition: all 0.159s;
+    -webkit-box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.618);
+    -moz-box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.618);
+    box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.618);
+}
+.hide_btn{
+    margin-left: 15px;
+}
+.newer_div{
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+.left_bottom_div{
+    position: fixed;
+    bottom: 9px;
+    z-index: 250;
+}
+.mr_t_1000{
+    margin-top: 1000px;
+}
+.pic_header{
+    color: rgb(195, 195, 195);
+    font-weight: bold;
+    font-size: 24px;
+    margin-top: 10px;
+}
