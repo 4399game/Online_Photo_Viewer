@@ -1,0 +1,56 @@
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'vcr/online/tool.css' %}"/>
+<div class="ui mini modal" id="tishi_modal">
+    <div class="content">
+        <p id="tishi_txt"></p>
+    </div>
+    <div class="mini actions">
+        <div class="ui mini color button cancle">
+            I&nbsp;&nbsp;know
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="{% static 'plugin/cropper/cropper.min.css' %}"/>
+<script type="text/javascript" src="{% static 'plugin/cropper/cropper.min.js' %}"></script>
+<div class="ui fullscreen modal" id="cropper_modal">
+    <div class="content">
+        <img class="ui fluid image" id="cropper_start_img" 
+            style="max-width: 100%;">
+    </div>
+    <div class="actions">
+        <div class="ui icon mini buttons left floated">
+            <div class="ui icon button" id="move_left" data-tooltip="Move the image 10 pixels to the left" data-position="top left">
+                <i class="long arrow left icon"></i>
+            </div>
+            <div class="ui button" id="move_right" data-tooltip="Move the image 10 pixels to the right" data-position="top left">
+                <i class="long arrow right icon"></i>
+            </div>
+            <div class="ui button" id="move_up" data-tooltip="Move the image up 10 pixels" data-position="top center">
+                <i class="long arrow up icon"></i>
+            </div>
+            <div class="ui button" id="move_down" data-tooltip="Move the image down 10 pixels" data-position="top center">
+                <i class="long arrow down icon"></i>
+            </div>
+        </div>
+        <div class="ui mini icon buttons left floated" style="margin-left: 2px;">
+            <div class="ui button" id="rotate_90" data-tooltip="Rotate the picture 90 degrees clockwise" data-position="top center">
+                <i class="counterclockwise rotated vertically flipped repeat icon"></i>
+            </div>
+            <div class="ui button" id="scale_x" data-tooltip="Flip the picture horizontally" data-position="top right">
+                <i class="retweet top icon"></i>
+            </div>
+            <div class="ui button" id="scale_y" data-tooltip="Flip the picture vertically" data-position="top right">
+                <i class="counterclockwise rotated retweet top icon"></i>
+            </div>
+        </div>
+        <div class="ui mini icon buttons" style="margin-right: 60px;">
+            <div class="ui button" id="reset_cropper" data-tooltip="Restore to default" data-position="top right">
+                    reset
+            </div>
+        </div>
+        <div class="ui approve button">
+            Ok
+        </div>
+    </div>
+</div>

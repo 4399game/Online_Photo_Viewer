@@ -1,0 +1,23 @@
+base.html
+<!--
+<link rel="stylesheet" href="{% static 'vcr/css/foundation.min.css' %}"/>
+<script  type="text/javascript" src="{% static 'vcr/js/jquery.min.js' %}"></script>
+<script  type="text/javascript" src="{% static 'vcr/js/foundation.min.js' %}"></script>
+<script  type="text/javascript" src="{% static 'vcr/js/modernizr.js' %}"></script>
+-->
+pic.html
+<!--div class="ui dimmer">
+    <div class="content">
+        <div class="center">
+            <h2 class="ui inverted header">选择操作</h2>
+            <div class="ui button top left pointing dropdown pic_edit_menu" >
+                操作
+                <div class="menu">
+                    <div class="item" data-value="male" onclick="open_edit_pic_modal({{ pic.id }})">修改</div>
+                    <div class="item" data-value="female" onclick="open_del_pic_modal({{ pic.id }});">删除</div>
+                </div>
+            </div>
+            <div class="ui {{ request.session.kouza_.kouza_ctrl.color }} button" onclick="go_in_pic({{ pic.id }});">查看</div>
+        </div>
+    </div>
+</div-->

@@ -1,0 +1,33 @@
+{% extends 'user/style.html' %}
+{% load staticfiles %}
+{% block main_thing %}
+<div class="ui large header">
+    密码管理
+    <a class="txt-mini the_name" style="padding-left: 15px;">&nbsp;</a>
+    <div class="sub header">密码对于用户的数据具有极有效的保护作用：</div>
+</div>
+<div class="ui transparent input">
+    <label><a>域的密码：</a></label>
+    <input type="text" placeholder="{{ kuuk_pwd }}">
+</div>
+<div class="ui transparent input">
+    <label><a>守护密码：</a></label>
+    <input type="text" placeholder="{{ ctrl_pwd }}">
+</div>
+<br/>
+<br/>
+<div class="ui large header">
+    账户绑定
+    <a class="txt-mini the_name" style="padding-left: 15px;">&nbsp;</a>
+    <div class="sub header">账户是登录的凭证，也是找回密码的关键：</div>
+</div>
+<div class="ui transparent fluid input">
+    <label><a>手机号码：</a></label>
+    <input type="text" placeholder="{{ kuuk_pwd }}">
+</div>
+<div style="height: 10px; width: 100%;"></div>
+<div class="ui transparent fluid input">
+    <label><a>常用邮箱：</a></label>
+    <input type="text" placeholder="{{ ctrl_pwd }}">
+</div>
+{% endblock main_thing %}

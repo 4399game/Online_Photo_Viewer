@@ -1,0 +1,87 @@
+一至十六：
+    one
+    two
+    three
+    four
+    five
+    six
+    seven
+    eight
+    nine
+    ten
+    eleven
+    twelve
+    thirteen
+    fourteen
+    fifteen
+    sixteen
+
+颜色:
+    red
+    orange
+    yellow
+    olive
+    teal
+    blue
+    violet
+    purple
+    pink
+    brown
+    grey
+    black
+
+调节颜色:
+    粉色: 
+        #ffaec8
+        rgba(255, 174, 200, 1)
+    蓝色:
+        #00a8f3
+        rgba(0, 168, 243, 1)
+    黄色:
+        #fff200
+        rgba(255, 242, 0, 1)
+    绿色:
+        #0ed145
+        rgba(14, 209, 69, 1)
+
+    红色:
+        #ec1c24
+        rgba(236, 28, 36, 1)
+    水绿:
+        #8cfffb
+        rgba(140, 255, 251, 1)
+    金色:
+        #ffca18
+        rgba(255, 202, 24, 1)
+    浅绿:
+        #c4ff0e
+        rgba(196, 255, 14, 1)
+
+    橙色:
+        #ff7f27
+        rgba(255, 127, 39)
+    靛蓝:
+        #3f48cc
+        rgba(63, 72, 204, 1)
+    褐色:
+        #b97a56
+        rgba(185, 122, 86, 1)
+    浅黄:
+        #fdeca6
+        rgba(253, 236, 166, 1)
+    
+    深红:
+        #88001b
+        rgba(136, 0, 27, 1)
+    紫色:
+        #b83dba
+        rgba(184, 61, 186, 1)
+    灰色:
+        #585858
+        rgba(88, 88, 88, 1)
+    浅灰:
+        #c3c3c3
+        rgba(195, 195, 195, 1)
+
+名字:
+    表纸

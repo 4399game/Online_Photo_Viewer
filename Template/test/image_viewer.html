@@ -1,0 +1,131 @@
+<!DOCTYPE html> 
+{% load staticfiles %}
+<html lang="en"> 
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+        <title>
+            Viewer
+        </title>
+        <link rel="stylesheet" href="{% static 'vcr/semantic_ui/semantic.min.css' %}"/>
+    </head>
+    <body>
+        <!-- Base -->
+        <link rel="stylesheet" href="{% static 'vcr/semantic_ui/semantic.min.css' %}"/>
+        <script  type="text/javascript" src="{% static 'vcr/js/jquery.min.js' %}"></script>
+        <script  type="text/javascript" src="{% static 'vcr/semantic_ui/semantic.min.js' %}"></script>
+        <!-- viewer -->
+        <link rel="stylesheet" href="{% static 'plugin/viewer/viewer.css' %}">
+        <script type="text/javascript" src="{% static 'plugin/viewer/viewer.min.js' %}"></script>
+        <style>
+            .the_img{
+                width: 150px;height: auto;
+            }
+        </style>
+        <ul id="images">
+            {{img_list}}
+            {% for img in img_list %}
+                <li>
+                    <img class="the_img" id="show_img_{{ img.id }}" src="{{ MEDIA_URL }}{{ img.tiny_img }}">
+                </li>
+                <script>
+                    $('#show_img_{{ img.id }}').click(function() {
+                        $('#img_{{ img.id }}').click();
+                    });
+                </script>
+            {% endfor %}
+        </ul>
+        <ul id="images" style="display: none;">
+            {% for img in img_list %}
+                <li>
+                    <img class="the_img" id="img_{{ img.id }}" src="{{ MEDIA_URL }}{{ img.tiny_img }}" data-original="{{ MEDIA_URL }}{{ img.tiny_img }}">
+                </li>
+            {% endfor %}
+        </ul>
+        <script>
+            var image = $('#images');
+            var options = {
+                // inline: true,
+                url: 'src',
+                ready: function (e) {
+                console.log(e.type);
+                },
+                show: function (e) {
+                console.log(e.type);
+                },
+                shown: function (e) {
+                console.log(e.type);
+                },
+                hide: function (e) {
+                console.log(e.type);
+                },
+                hidden: function (e) {
+                console.log(e.type);
+                },
+                view: function (e) {
+                console.log(e.type);
+                },
+                viewed: function (e) {
+                console.log(e.type);
+                }
+            };
+            image.on({
+                ready:  function (e) {
+                console.log(e.type);
+                },
+                show:  function (e) {
+                console.log(e.type);
+                },
+                shown:  function (e) {
+                console.log(e.type);
+                },
+                hide:  function (e) {
+                console.log(e.type);
+                },
+                hidden: function (e) {
+                console.log(e.type);
+                },
+                view:  function (e) {
+                console.log(e.type);
+                },
+                viewed: function (e) {
+                console.log(e.type);
+                }
+            }).viewer(options);
+        </script>
+        <script>
+            /*
+            var imgs = $('#images');
+            
+            var options = {
+                inline: true,
+                tooltip: false,
+                ready: function (e) {
+                console.log('ready = ', e.type);
+                },
+                show: function (e) {
+                console.log('show = ', e.type);
+                },
+                built: function (e) {
+                console.log('built = ', e.type);
+                },
+                hide: function (e) {
+                console.log('hide = ', e.type);
+                },
+                hidden: function (e) {
+                console.log('hidden = ', e.type);
+                },
+                view: function (e) {
+                console.log('view = ', e.type);
+                },
+                viewed: function (e) {
+                console.log('viewed = ', e.type);
+                }
+            };
+            imgs.viewer(options);
+            */
+        </script>
+    </body>
+</html>

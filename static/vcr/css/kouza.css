@@ -1,0 +1,17 @@
+#main_color_list > li{
+    float: left;
+}
+.diy_color_div{
+    
+}
+.frame_hui{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+.frame_hui{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: none;
+}

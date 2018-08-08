@@ -1,0 +1,2 @@
+{{ object.station_pic }}
+{{ object.station_img }}

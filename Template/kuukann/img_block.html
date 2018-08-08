@@ -1,0 +1,235 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block vcr_css %}
+    <link rel="stylesheet" href="{% static 'vcr/online/img.css' %}">
+    <style>
+    .newer_img{
+        border: 3px dashed rgb(255, 255, 255);
+    }
+    .newer_img:hover{
+        border: 3px dashed {{ request.session.kouza_.style.diy_color }}1);
+    }
+    .body{
+        background: rgba(195, 195, 195, 0.2)
+    }
+    </style>
+{% endblock vcr_css %}
+{% block center %}
+<div class="ui container" id="">
+    <div class="ui grid">
+        <div class="ui sixteen wide column center aligned">
+            <div class="pic_header">{{ pic.name }}</div>
+        </div>
+    </div>
+    <div class="ui two column doubling grid">
+        <div class="ui four wide column">
+            {% if pic.get_img_count > 0 %}
+                {% if layout.order_by == 'create_date' %}
+                    {{ pic.get_img_first.create_date|date:'Y-m-d' }}&nbsp;&nbsp;<a>至</a>&nbsp;&nbsp;{{ pic.get_img_last.create_date|date:'Y-m-d' }}
+                    {% else %}
+                    {{ pic.get_img_last.create_date|date:'Y-m-d' }}&nbsp;&nbsp;<a>至</a>&nbsp;&nbsp;{{ pic.get_img_first.create_date|date:'Y-m-d' }}
+                {% endif %}
+                {% else %}
+                <a>该相册无项目</a>
+            {% endif %}
+        </div>
+        <div class="ui twelve wide column" style="margin-top: 0px;">
+            <div class="ui grid">
+                <div class="ui eight wide column">
+                    排列方式：
+                    {% if layout.order_by == 'create_date' %}
+                    <div class="ui dropdown" id="align_menu">
+                        <a class="text">最早</a>
+                        <div class="menu">
+                            <div class="item new">最新</div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="ui dropdown" id="align_menu">
+                        <a class="text">最新</a>
+                        <div class="menu">
+                            <div class="item old">最早</div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="ui eight wide column right aligned">
+                    <i class="stop icon max_layout"></i>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="block layout icon block_layout"></i>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="ui right center dropdown" id="layout_grid_menu">
+                        <i class="grid_layout grid layout icon"></i>
+                        <div class="menu">
+                            <div class="header">设置每行多少项</div>
+                            <div class="item grid_sixteen" onclick="change_grid_name('sixteen')">
+                                <i class="ui check icon inverted"></i>一项
+                            </div>
+                            <div class="item grid_eight" onclick="change_grid_name('eight')">
+                                <i class="ui check icon inverted"></i>两项
+                            </div>
+                            <div class="item grid_four" onclick="change_grid_name('four')">
+                                <i class="ui check icon inverted"></i>四项
+                            </div>
+                            <div class="header">选择宽高的比例</div>
+                            <div class="item grid_16_9" onclick="change_grid_ratio(16,9)">
+                                <i class="ui check icon inverted"></i>16&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;9
+                            </div>
+                            <div class="item grid_4_3" onclick="change_grid_ratio(4,3)">
+                                <i class="ui check icon inverted"></i>4&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;3
+                            </div>
+                            <div class="item grid_1_1" onclick="change_grid_ratio(1,1)">
+                                <i class="ui check icon inverted"></i>1&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;1
+                            </div>
+                            <div class="item grid_3_4" onclick="change_grid_ratio(3,4)">
+                                <i class="ui check icon inverted"></i>3&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;4
+                            </div>
+                            <div class="item grid_9_16" onclick="change_grid_ratio(9,16)">
+                                <i class="ui check icon inverted"></i>9&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;16
+                            </div>
+
+                            <div class="ui divider"></div>
+                            <div class="header">自定义宽高比例</div>
+                            <div class="item diy_grid" id="diy_grid"><i class="ui plus circle icon"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui grid img_grid" id="img_grid">
+    </div>
+    <div class="ui divider"></div>
+    <div class="ui grid" id="pic_msg">
+        <div class="ui sixteen wide column">
+            <h3>关于此相册</h3>
+            <p><a>{{ pic.get_img_count }}</a>&nbsp;个项目</p>
+            <p>创建时间：{{ pic.create_date|date:'Y-m-d H:i' }}</p>
+            <p>修改时间：{{ pic.update_date|date:'Y-m-d H:i' }}</p>
+            <div style="height: 5px;"></div>
+        </div>
+    </div>
+    <div style="height: 60px;"></div>
+    <form action='' method="POST" id="layout_form">
+        {% csrf_token %}
+        <input type="hidden" value="{{ pic.id }}" name="pic_id"/>
+        <input type="hidden" value="{{ layout.order_by }}" name="order_by" id="order_by"/>
+        <input type="hidden" value="{{ layout.layout_name }}" name="layout_name" id="layout_name"/>
+        <input type="hidden" value="{{ layout.diy_w }}" name="diy_w" id="layout_diy_w"/>
+        <input type="hidden" value="{{ layout.diy_h }}" name="diy_h" id="layout_diy_h"/>
+        <input type="hidden" value="{{ layout.grid_name }}" name="grid_name" id="grid_name"/>
+    </form>
+    <div class="left_bottom_div">
+        <div class="ui icon bottom left huge pointing dropdown button" id="opt_img_menu">
+            <i class="circle color notched icon"></i>
+            <div class="menu">
+                <div class="item add_img">
+                    <i class="plus icon"></i>添加图片&nbsp;&nbsp;
+                </div>
+                <div class="header">
+                    选择相关
+                </div>
+                <div class="item all_choise">
+                    <i class="check circle outline icon"></i>全部选择
+                </div>
+                <div class="item fan_choise">
+                    <i class="vertically flipped clockwise rotated check circle outline icon"></i>反向选择
+                </div>
+                <div class="item none_choise">
+                    <i class="minus square outline icon"></i>取消选中
+                </div>
+                <div class="item" id="to_top">
+                    <i class="angle up icon"></i>
+                    <span class="text">返回顶部</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui top fixed inverted menu" id="choise_bar" style="display: none;">
+        <div class="item choise_num" id="change_txt">
+        </div>
+        <div class="right floated menu">
+            <a class="item del">
+                删除
+            </a>
+            <a class="item none_choise">
+                取消
+            </a>
+        </div>
+    </div>
+    <div class="ui basic mini modal" id="diy_grid_modal">
+        <div class="content text centered aligned" style="border: 1px solid pink">
+            <form class="ui mini form text center">
+                <div class="txt-small centered">宽&nbsp;/&nbsp;高</div>
+                <div class="mini input field">
+                    <input type="text" id="new_diy_w" class="ui mini input" style="width: 70px;height:25px;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="txt-middle" style="margin-top: 5px;">/</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" id="new_diy_h" class="ui mini input" style="width: 70px;height:25px;">
+                </div>
+                <br/>
+                <div class="ui mini button center floated" id="ok_diy_grid">Ok</div>
+            </form>
+        </div>
+    </div>
+    <div class="ui small modal" id="add_img_modal">
+        <div class="header">
+            添加图片
+        </div>
+        <div class="content">
+            <form action="" id="add_img_form" method="POST" class="ui form" enctype="multipart/form-data">
+                <div class="field">
+                    <label>图片</label>
+                    <input name="img_image" type="file" id="add_img_image" onchange="show_less_img('add_img_image', 'add_full_img', 'add_less_img')">
+                </div>
+                {% csrf_token %}
+                <input type="hidden" name="pic_id" value="{{ pic.id }}">
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui color approve button">
+                Ok
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="stop_delete" value="false">
+    <div class="ui modal" id="del_img_modal">
+        <div class="header">
+            你真的要删除<span class="del_img_she"></span>吗？
+        </div>
+        <div class="content">
+            即将删除&nbsp;<span id="del_img_p"></span>&nbsp;个项目，确定要删除<span class="del_img_she"></span>吗？
+        </div>
+        <div class="actions">
+            <div class="ui color approve button">
+                Yes
+            </div>
+            <div class="ui cancle button">
+                No
+            </div>
+        </div>
+    </div>
+    <input type="hidden" value="{{ pic.id }}" id="pic_id">
+</div>
+<ul id="see_imgs_ul" style="display: none;"></ul>
+
+<script type="text/javascript">
+    var select_bool = true;
+    var data_list = [];
+    var all_data_list = [
+    {% for img in img_list %}
+        {{ img.id }},
+    {% endfor %}
+    ];
+</script>
+<script  type="text/javascript" src="{% static 'vcr/online/img.js' %}"></script>
+{% block vcr_js %}
+{% endblock vcr_js %}
+<script type="text/javascript">
+    $(function(){
+        $('#footer').removeClass('mr_t_1000');
+    });
+</script>
+{% endblock center %}

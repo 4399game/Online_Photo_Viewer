@@ -1,0 +1,293 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block vcr_css %}
+    <link rel="stylesheet" href="{% static 'vcr/online/pic.css' %}">
+<style>
+    .bg_diy{
+        background: {{ request.session.kouza_.style.diy_color }}0.8);
+    }
+    .bg_diy:hover{
+        background: {{ request.session.kouza_.style.diy_color }}1);
+    }
+    .cr_diy{
+        color:{{ request.session.kouza_.style.diy_color }}1);
+    }
+    .cover{
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: whitesmoke;
+        border-radius: 1px;
+        box-shadow: 0px 1px 10px -1px rgb(237, 237, 237);
+    }
+    .pic_choise{
+        border-radius: 1px;
+        border: 5px solid {{ request.session.kouza_.style.diy_color }}1);
+    }
+    .pic_choise:hover{
+        border: 5px solid {{ request.session.kouza_.style.diy_color }}0.8);
+    }
+    .txt-underline{
+        text-decoration: underline;
+    }
+</style>
+{% endblock vcr_css %}
+{% block vcr_js %}
+    <script type="text/javascript" src="{% static 'vcr/js/pic.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugin/jquery-animate/jquery-animate.js' %}"></script>
+{% endblock vcr_js %}
+{% block center %}
+<script type="text/javascript">
+    var all_data_list = [];
+    var data_list = [];
+    var choise_bar = $('#choise_bar');
+    start_ctrl = function(index){
+        all_data_list.push(index);
+        var pic_ = $('#pic_' + index);
+        var the_cover_ = $('#the_cover_' + index);
+        the_cover_.height(pic_.width()/ (16/9));
+        choise(index);
+        pic_.hover(
+            function () {
+            },
+            function () {
+            }
+        );
+        
+    };
+    choise = function (index) {
+        var the_cover_ = $('#the_cover_' + index);
+        the_cover_.click(function () {
+            var i = $.inArray(index, data_list);
+            if (i == -1){
+                data_list.push(index);
+                change_pic_bg(index, true);
+            }
+            else{
+                data_list.splice(i, 1);
+                change_pic_bg(index, false);
+            }
+            choise_ctrl();
+        });
+        $('#conten_' + index).click(function () {
+            go_in_pic('{{ kuukann.name }}', $('#pic_name_input_' + index).val());
+        });
+    };
+    change_pic_bg = function (index, flag){
+        if(flag){
+            $('#pic_' + index).addClass('pic_choise');
+            $('#choise_div_' + index).attr({'style': 'padding: 0px 0px'});
+        }
+        else{
+            $('#pic_' + index).removeClass('pic_choise');
+            $('#choise_div_' + index).attr({'style': ''});
+        }
+    };
+    
+    choise_ctrl = function (){
+        var dl_length = data_list.length;
+        if (dl_length < 1){
+            change_dom(choise_bar ,false, 200);
+            change_dom($('.add_pic') ,true, 600);
+        }
+        else if (dl_length == 1){
+            change_dom($('#edit_to_fan'), true, 200);
+            change_dom(choise_bar ,true, 0);
+            change_dom($('.add_pic') ,false, 0);
+        }
+        else if (dl_length > 1){
+            change_dom($('#edit_to_fan'), false, 600);
+            change_dom(choise_bar ,true, 0);
+            change_dom($('.add_pic') ,false, 0);
+        }
+        show_num();
+    };
+    show_num = function (){
+        var data_list_length = data_list.length;
+        if (data_list < 1){
+            $('.choise_num').html('未选择任何项目');
+        }
+        else{
+            $('.choise_num').html('已选择&nbsp;'+ data_list_length +'&nbsp;个项目');
+        }
+    };
+    change_dom = function(div_dom, flag, tim){
+        if(tim == 0){
+            if (flag){
+                div_dom.attr({'style': ''});
+                div_dom.stop(true).animate({ opacity: 1 }, tim, function(){ 
+                });
+            }
+            else{
+                div_dom.attr({'style': 'display:none'});
+                div_dom.stop(true).animate({ opacity: 0 }, tim, function(){
+                });
+            }
+        }
+        else if(tim > 0){
+            if (flag){
+                div_dom.attr({'style': ''});
+                div_dom.stop(true).animate({ opacity: 1 }, tim, function(){ 
+                });
+            }
+            else{
+                div_dom.stop(true).animate({ opacity: 0 }, tim, function(){
+                    div_dom.attr({'style': 'display:none'});
+                });
+            }
+        }
+    }
+</script>
+<div class="ui container">
+    <div style="height: 15px; width: 100%;"></div>
+    <div class="ui two column doubling stackable grid pic_grid">
+        <div class="ui sixteen wide column">
+            <a class="active item">
+                {% if kuukann.get_pic_first_date is not None %}
+                    {{ kuukann.get_pic_first_date|date:'Y年m月d日' }}
+                    &nbsp;-&nbsp;
+                    {{ kuukann.get_pic_last_date|date:'Y年m月d日' }}
+                    {% else %}
+                    未找到项目
+                {% endif %}
+            </a>
+            <div class="fr add_pic mini left icon button" onclick="open_add_pic_modal();">
+                <a>
+                    新增
+                </a>
+            </div>
+        </div>
+        {% for pic in pic_list %}
+        <div class="four wide column" id="col_{{ pic.id }}" style="padding: 10px 10px;">
+            <div class="choise_div" id="choise_div_{{ pic.id }}">
+                <div class="pic_every" id="pic_{{ pic.id }}">
+                    <div class="image cover" id="the_cover_{{ pic.id }}">
+                        <div class="hui"></div>
+                        <img src="{{ MEDIA_URL }}{{ pic.image }}" class="the_img" id="the_img_{{ pic.id }}">
+                    </div>
+                    <div class="conten" id="conten_{{ pic.id }}"s>
+                        <div class="name" id="pic_name_{{ pic.id }}">
+                            相册
+                        </div>
+                        <div class="discr">
+                            {{ pic.name }}
+                        </div>
+                    </div>
+                    <div class="pic_num">{{ pic.get_img_count }}&nbsp;张图片</div>
+                    <input type="hidden" value="{{ pic.name }}" id="pic_name_input_{{ pic.id }}">
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var index = {{ pic.id }};
+            start_ctrl(index);
+        </script>
+        {% endfor %}
+        <div id="new_pic"></div>
+        <img src="" id="new_img">
+    </div>
+    <div class="ui top fixed inverted menu" id="choise_bar" style="display: none;">
+        <div class="item choise_num">
+        </div>
+        <div class="right floated menu">
+            <a class="item edit" id="edit_to_fan">
+                编辑
+            </a>
+            <a class="item del">
+                删除
+            </a>
+            <a class="item none">
+                取消
+            </a>
+        </div>
+    </div>
+    <div class="ui small modal" id="add_pic_modal">
+        <div class="header">
+            填写相册相关资料
+        </div>
+        <div class="content">
+            <form id="add_pic_form" action="{{ kuukann.name }}" method="post" class="ui form" enctype="multipart/form-data">
+                <div class="field">
+                    <label>封面</label>
+                    <div type="button" class="fluid button" onclick="document.getElementById('add_pic_image').click();">
+                            点击添加
+                    </div>
+                    <input name="pic_image" type="file" id="add_pic_image" style="display: none;"
+                        onchange="open_cropper_modal('add_pic_image', 'add_pic_image_2', 16/9, '#add_pic_modal')">
+                </div>
+                <div class="ui doubling stackable grid">
+                    <div class="ui six wide column">
+                        <img class="ui fluid image" src="" id="add_pic_image_2"/>
+                    </div>
+                    <div class="ui ten wide column">
+                    </div>
+                </div>
+                <div class="field">
+                    <label>命名相册</label>
+                    <input name="pic_name" id="add_pic_name" type="text" placeholder="少于15字符">
+                </div>
+                {% csrf_token %}
+                <input name="kuukann_id" type="hidden" value="{{ kuukann.id }}">
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui color approve button">
+                Ok
+            </div>
+        </div>
+    </div>
+    <div class="ui mini modal" id="edit_pic_modal">
+        <div class="header">
+            修改中...
+        </div>
+        <div class="content">
+            <form id="edit_pic_form" action="" method="post" class="ui form" enctype="multipart/form-data">
+                <div class="field">
+                    <label>封面</label>
+                    <input name="pic_image" type="file" id="edit_pic_image" onchange="open_cropper_modal('edit_pic_image', 'edit_pic_image_2', 16/9, '#edit_pic_modal')">
+                </div>
+                <div class="field">
+                    <label>封面展示</label>
+                    <div class="ui doubling stackable grid">
+                        <div class="ui sixteen wide column">
+                            <img class="ui fluid image" src="" id="edit_pic_image_2"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>相册名称</label>
+                    <input name="pic_name" type="text" placeholder="少于15字符" id="edit_pic_name">
+                </div>
+                <input name="pic_id" type="hidden" value="" id="edit_pic_id">
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui color approve button" onclick="edit_pic();">
+                Ok
+            </div>
+        </div>
+    </div>
+    <div class="ui tiny modal" id="del_pic_modal">
+        <div class="header">
+            删除
+        </div>
+        <div class="content">
+            已选择&nbsp;<span id="del_pic_name"></span>&nbsp;个项目，你确定要删除她们吗？
+        </div>
+        <div class="actions">
+            <div class="ui cancel button">No</div>
+            <div class="ui color approve button">
+                Yes
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="kuukann_id" value="{{ kuukann.id }}">
+<input type="hidden" id="kuukann_name" value="{{ kuukann.name }}">
+<script type="text/javascript">
+    $.ajaxSetup({
+        data:{csrfmiddlewaretoken:'{{ csrf_token }}'},
+    });
+</script>
+{% endblock center %}

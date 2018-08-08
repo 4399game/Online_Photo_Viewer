@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load staticfiles %}
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <title>
+            {{ request.session.kouza_.style.name }}
+        </title>
+        <link rel="shortcut icon" href="{{ MEDIA_URL }}{{ request.session.kouza_.face }}" type="image/x-icon"/>
+    </head>
+    <body>
+        <link rel="stylesheet" href="{% static 'vcr/semantic_ui/semantic.min.css' %}"/>
+        <script  type="text/javascript" src="{% static 'vcr/online/jquery.min.js' %}"></script>
+        <script  type="text/javascript" src="{% static 'vcr/semantic_ui/semantic.min.js' %}"></script>
+
+        <link rel="stylesheet" href="{% static 'vcr/online/vcr.css' %}"/>
+        <link rel="stylesheet" href="{% static 'vcr/online/first.css' %}"/>
+        <script  type="text/javascript" src="{% static 'vcr/online/vcr.js' %}"></script>
+
+        <style type="text/css">
+            .color-grandient-bg{
+                background: url("{{ MEDIA_URL }}{{ request.session.kouza_.style.bg_img }}");
+                background-position: center 30%;
+                background-size: cover;
+            }
+        </style>
+        {% block vcr_css %}
+
+        {% endblock vcr_css %}
+        <script>
+            var kouza_ctrl = {
+                color_val: "{{ request.session.kouza_.style.main_color }}",
+                color_diy: "{{ request.session.kouza_.style.diy_color }}",
+            }
+            var web_ctrl   = {
+                page_flag: "{{ page_flag }}",
+            }
+        </script>
+        <script type="text/javascript" src="{% static 'vcr/online/first.js' %}"></script>
+        <input type="hidden" id="media_url" value="{{ MEDIA_URL }}">
+        <div class="ui sidebar right inverted vertical menu" id="kouza_sidebar">
+            {% include 'user/msg.html' %}
+        </div>
+        <div class="ui top sidebar menu" id="menu_sidebar">
+            <a class="item" href="{{ previous_url|default:'/' }}">返回</a>
+        </div>
+        <div class="pusher">
+            <div class="following light inverted fixed bar top_bar">
+                <div class="ui large secondary network menu bg-color" style="margin-top: -5px;">
+                    {% if page_flag == 'index' %}
+                        <div class="item">首页</div>
+                        {% else %}
+                        <a class="view-ui item" onclick="open_menu_sidebar();">
+                            <i class="sidebar icon"></i>
+                            <p class="">菜单</p>
+                        </a>
+                    {% endif %}
+                    <div class="tiny right menu">
+                        <a class="item" onclick="open_Kouza_sidebar();" style="padding: 7px 5px 5px 5px;">
+                            <img class="ui mini circular image" src="{{ MEDIA_URL }}{{ request.session.kouza_.face }}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id=center>
+                {% block center %}
+                {% endblock center %}
+            </div>
+            <div id="footer" class="mr_t_1000">
+            </div>
+            {% block func %}
+                {% include 'extra/tool.html' %}
+            {% endblock func %}
+        </div>
+        {% block vcr_js %}
+
+        {% endblock vcr_js %}
+        {% csrf_token %}
+        <script type="text/javascript" src="{% static 'vcr/online/last.js' %}"></script>
+    </body>
+</html>

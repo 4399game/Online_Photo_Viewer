@@ -1,0 +1,122 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block vcr_css %}
+    <link rel="stylesheet" href="{% static 'vcr/css/pic.css' %}">
+{% endblock vcr_css %}
+{% block center %}
+<div class="ui container" id="pic_con">
+    <div class="ui grid">
+        <div class="ui sixteen wide column">
+            <span style="width: 15px;height: 5px;" id="empty_span"></span>
+            <span>选择排列方式：</span>
+            <div class="ui dropdown">
+                <div class="text">底部一致</div>
+                <div class="menu">
+                    <div class="item">
+                        底部一致
+                    </div>
+                    <div class="item">
+                        顶部一致
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui grid" id="out_img">
+        {% for i in img_i %}
+            <div class="ui img_out_column column" style="height: 278px;"></div>
+        {% endfor %}
+    </div>
+    
+    {% csrf_token %}
+    <input type="hidden" id="media_url" value="{{ MEDIA_URL }}">
+    <input type="hidden" id="pic_id" value="{{ pic.id }}">
+</div>
+<div class="ui sixteen wide column" id="listen_col" style="height: 1px;">
+</div>
+<!-- 操作菜单 -->
+<div class="left_bottom_div">
+    <div class="ui icon bottom left pointing dropdown button" id="opt_menu">
+        <i class="circle notched icon"></i>
+        <div class="menu">
+            <div class="item">
+                <i class="dropdown icon"></i>
+                <span class="text">图片相关</span>
+                <div class="menu">
+                    <div class="item" id="add_img">
+                        <i class="plus icon"></i>添加一张
+                    </div>
+                    <div class="item" id="edit_img">
+                        <i class="edit icon"></i>编辑一张
+                    </div>
+                    <div class="item" id="del_img">
+                        <i class="trash icon"></i>删除选中
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <i class="dropdown icon"></i>
+                <span class="text">布局大小</span>
+                <div class="menu">
+                    <div class="item" id="max_layout">
+                        <i class="stop icon"></i>max
+                    </div>
+                    <div class="item" id="mid_layout">
+                        <i class="block layout icon"></i>mid
+                    </div>
+                    <div class="item" id="min_layout">
+                        <i class="grid layout icon"></i>min
+                    </div>
+                    <div class="item" id="bom_layout">
+                        <i class="bomb icon"></i>bom
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <i class="dropdown icon"></i>
+                <span class="text">选择相关</span>
+                <div class="menu">
+                    <div class="item" id="all_choise">全部选择</div>
+                    <div class="item" id="none_choise">取消选中</div>
+                </div>
+            </div>
+            <div class="item" id="to_top">
+                <i class="angle up icon"></i>
+                <span class="text">返回顶部</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 添加图片 -->
+<div class="ui modal" id="add_img_modal">
+    <div class="header">
+        添加图片
+    </div>
+    <div class="content">
+        <form action="/kuukann/img" id="add_img_form" method="POST" class="ui form" enctype="multipart/form-data">
+            <div class="field">
+                <label>图片</label>
+                <input name="img_image" type="file" id="add_img_image">
+            </div>
+            <div class="field">
+                <label>备注</label>
+                <input name="img_name" type="text" id="add_img_name" placeholder="备注，能让你更好的去回忆，你们的过往...">
+            </div>
+            {% csrf_token %}
+            <input type="hidden" name="pic_id" value="{{ pic.id }}">
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui approve button">
+            Ok
+        </div>
+        <div class="ui cancle button">
+            Cancle
+        </div>
+    </div>
+</div>
+{% block vcr_js %}
+    <script  type="text/javascript" src="{% static 'vcr/js/pic.js' %}"></script>
+{% endblock vcr_js %}
+{% endblock center %}

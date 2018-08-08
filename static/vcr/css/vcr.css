@@ -1,0 +1,285 @@
+/*
+    位移:
+    less: 1
+    mini: 2
+    tiny: 5
+    small: 10
+    middle: 12
+    big: 15
+    large: 20
+    huge: 30
+    massive: 35
+    somach: 50
+*/
+/*
+    margin
+*/
+.mr-t-less{ margin-top: 1px;
+} .mr-r-less{ margin-right: 1px;
+} .mr-d-less{ margin-bottom: 1px;
+} .mr-l-less{ margin-left: 1px;
+}
+.mr-t-mini{ margin-top: 2px;
+} .mr-r-mini{ margin-right: 2px;
+} .mr-d-mini{ margin-bottom: 2px;
+} .mr-l-mini{ margin-left: 2px;
+}
+.mr-t-tiny{ margin-top: 5px;
+} .mr-r-tiny{ margin-right: 5px;
+} .mr-d-tiny{ margin-bottom: 5px;
+} .mr-l-tiny{ margin-left: 5px;
+}
+.mr-t-small{ margin-top: 10px;
+} .mr-r-small{ margin-right: 10px;
+} .mr-d-small{  margin-bottom: 10px;
+} .mr-l-small{ margin-left: 10px;
+}
+.mr-t-middle{ margin-top: 12px;
+} .mr-r-middle{ margin-right: 12px;
+} .mr-d-middle{  margin-bottom: 12px;
+} .mr-l-middle{ margin-left: 12px;
+}
+.mr-t-big{ margin-top: 15px;
+} .mr-r-big{ margin-right: 15px;
+} .mr-d-big{  margin-bottom: 15px;
+} .mr-l-big{ margin-left: 15px;
+}
+.mr-t-large{ margin-top: 20px;
+} .mr-r-large{ margin-right: 20px;
+} .mr-d-large{  margin-bottom: 20px;
+} .mr-l-large{ margin-left: 20px;
+}
+.mr-t-huge{ margin-top: 30px;
+} .mr-r-huge{ margin-right: 30px;
+} .mr-d-huge{  margin-bottom: 30px;
+} .mr-l-huge{ margin-left: 30px;
+}
+.mr-t-massive{ margin-top: 35px;
+} .mr-r-massive{ margin-right: 35px;
+} .mr-d-massive{  margin-bottom: 35px;
+} .mr-l-massive{ margin-left: 35px;
+}
+.mr-t-somach{ margin-top: 50px;
+} .mr-r-somach{ margin-right: 50px;
+} .mr-d-somach{  margin-bottom: 50px;
+} .mr-l-somach{ margin-left: 50px;
+}
+
+.mr-t-less-f{ margin-top: -1px;
+} .mr-r-less-f{ margin-right: -1px;
+} .mr-d-less-f{ margin-bottom: -1px;
+} .mr-l-less-f{ margin-left: -1px;
+}
+.mr-t-mini-f{ margin-top: -2px;
+} .mr-r-mini-f{ margin-right: -2px;
+} .mr-d-mini-f{ margin-bottom: -2px;
+} .mr-l-mini-f{ margin-left: -2px;
+}
+.mr-t-tiny-f{ margin-top: -5px;
+} .mr-r-tiny-f{ margin-right: -5px;
+} .mr-d-tiny-f{ margin-bottom: -5px;
+} .mr-l-tiny-f{ margin-left: -5px;
+}
+.mr-t-small-f{ margin-top: -10px;
+} .mr-r-small-f{ margin-right: -10px;
+} .mr-d-small-f{  margin-bottom: -10px;
+} .mr-l-small-f{ margin-left: -10px;
+}
+.mr-t-middle-f{ margin-top: -12px;
+} .mr-r-middle-f{ margin-right: -12px;
+} .mr-d-middle-f{  margin-bottom: -12px;
+} .mr-l-middle-f{ margin-left: -12px;
+}
+.mr-t-big-f{ margin-top: -15px;
+} .mr-r-big-f{ margin-right: -15px;
+} .mr-d-big-f{  margin-bottom: -15px;
+} .mr-l-big-f{ margin-left: -15px;
+}
+.mr-t-large-f{ margin-top: -20px;
+} .mr-r-large-f{ margin-right: -20px;
+} .mr-d-large-f{  margin-bottom: -20px;
+} .mr-l-large-f{ margin-left: -20px;
+}
+.mr-t-huge-f{ margin-top: -30px;
+} .mr-r-huge-f{ margin-right: -30px;
+} .mr-d-huge-f{  margin-bottom: -30px;
+} .mr-l-huge-f{ margin-left: -30px;
+}
+.mr-t-massive-f{ margin-top: -35px;
+} .mr-r-massive-f{ margin-right: -35px;
+} .mr-d-massive-f{  margin-bottom: -35px;
+} .mr-l-massive-f{ margin-left: -35px;
+}
+.mr-t-somach-f{ margin-top: -50px;
+} .mr-r-somach-f{ margin-right: -50px;
+} .mr-d-somach-f{  margin-bottom: -50px;
+} .mr-l-somach-f{ margin-left: -50px;
+}
+/*
+    padding
+*/
+.pd-t-less{ padding-top: 1px;
+} .pd-r-less{ padding-right: 1px;
+} .pd-d-less{ padding-bottom: 1px;
+} .pd-l-less{ padding-left: 1px;
+}
+.pd-t-mini{ padding-top: 2px;
+} .pd-r-mini{ padding-right: 2px;
+} .pd-d-mini{ padding-bottom: 2px;
+} .pd-l-mini{ padding-left: 2px;
+}
+.pd-t-tiny{ padding-top: 5px;
+} .pd-r-tiny{ padding-right: 5px;
+} .pd-d-tiny{ padding-bottom: 5px;
+} .pd-l-tiny{ padding-left: 5px;
+}
+.pd-t-small{ padding-top: 10px;
+} .pd-r-small{ padding-right: 10px;
+} .pd-d-small{  padding-bottom: 10px;
+} .pd-l-small{ padding-left: 10px;
+}
+.pd-t-middle{ padding-top: 12px;
+} .pd-r-middle{ padding-right: 12px;
+} .pd-d-middle{  padding-bottom: 12px;
+} .pd-l-middle{ padding-left: 12px;
+}
+.pd-t-big{ padding-top: 15px;
+} .pd-r-big{ padding-right: 15px;
+} .pd-d-big{  padding-bottom: 15px;
+} .pd-l-big{ padding-left: 15px;
+}
+.pd-t-large{ padding-top: 20px;
+} .pd-r-large{ padding-right: 20px;
+} .pd-d-large{  padding-bottom: 20px;
+} .pd-l-large{ padding-left: 20px;
+}
+.pd-t-huge{ padding-top: 30px;
+} .pd-r-huge{ padding-right: 30px;
+} .pd-d-huge{  padding-bottom: 30px;
+} .pd-l-huge{ padding-left: 30px;
+}
+.pd-t-massive{ padding-top: 35px;
+} .pd-r-massive{ padding-right: 35px;
+} .pd-d-massive{  padding-bottom: 35px;
+} .pd-l-massive{ padding-left: 35px;
+}
+/*
+    文字:
+    less: 12
+    mini: 15
+    small: 16
+    tiny: 110
+    middle: 20
+    big: 25
+    large: 210
+    huge: 30
+    massive:35
+*/
+.txt-less{ font-size: 12px;
+} .txt-mini{ font-size: 15px;
+} .txt-small{ font-size: 16px;
+} .txt-tiny{ font-size: 110px;
+} .txt-middle{ font-size: 20px;
+} .txt-big{ font-size: 25px;
+} .txt-large{ font-size: 210px;
+} .txt-huge{ font-size: 30px;
+} .txt-massive{ font-size: 35px;
+}
+/*
+    颜色
+*/
+.cr-white{ color: white;
+} .cr-black{ color: black;
+} .cr-hv-white:hover { color: white;
+} .cr-hv-black:hover { color: black;
+}
+.bg-white{ background-color: white;
+} .bg-black{ background-color: black;
+} .bg-hv-white:hover { background-color: white;
+} .bg-hv-black:hover { background-color: black;
+}
+.bd-white{ border-color: white;
+} .bd-black{ border-color: black;
+} .bd-hv-white:hover { border-color: white;
+} .bd-hv-black:hover { border-color: black;
+}
+/*
+    元素
+*/
+.vcr-a{ text-decoration: none;
+} .vcr-a:hover { text-decoration: none;
+} .vcr-aL:focus { text-decoration: none;
+}
+.a-white{ color: white;
+} .a-white:hover { color: white;
+} .a-white:focus { color: white;
+}
+.vcr-ul{ list-style: none;
+}
+.txt-underline{ text-decoration: underline;
+}
+.div_h_5{
+    height: 5px;
+    width: 100%;
+}
+/*
+    对齐
+*/
+.fl{ float: left;
+} .fr{ float: right;
+}
+.pd-zero{ padding: 0 0 0 0;
+} .mr-zero{ margin: 0 0 0 0;
+}
+.cover{ overflow: hidden;
+}
+.base-div{
+    width: 100%;
+    height: auto;
+}
+/*
+    动作
+*/
+.ele-hide{ display: none;
+} .ele-fixed{ position: fixed;
+}
+.underline{ text-decoration: underline;
+}
+/*
+    工具
+*/
+.vcr-line{
+    width: 100%;
+    height: 1px;
+    background-color: darkgrey;
+    margin: 0 0 0 0;
+}
+
+/*
+        .color-txt{ color: {{ request.session.kouza_ctrl.color.color_val }};
+        } .color-txt:hover{ color: {{ request.session.kouza_ctrl.color.dan_color_val }};
+        } .color-hv-txt:hover { color: {{ request.session.kouza_ctrl.color.color_val }};
+        } .nong-color-hv-txt:hover { color: {{ request.session.kouza_ctrl.color.nong_color_val }};
+        }
+        .dan-color-txt{ color: {{ request.session.kouza_ctrl.color.dan_color_val }};
+        } .dan-color-txt:hover{ color: white;
+        } .dan-color-hv-txt:hover { color: {{ request.session.kouza_ctrl.color.dan_color_val }};
+        }
+        .nong-color-txt{ color: {{ request.session.kouza_ctrl.color.nong_color_val }};
+        } .nong-color-txt:hover{ color: {{ request.session.kouza_ctrl.color.dan_color_val }};
+        } .nong-color-hv-txt:hover { color: {{ request.session.kouza_ctrl.color.nong_color_val }};
+        }
+        .color-bg{ background-color: {{ request.session.kouza_ctrl.color.color_val }};
+        } .color-hv-bg:hover { background-color: {{ request.session.kouza_ctrl.color.color_val }};
+        }
+        .color-bd{ border-color: {{ request.session.kouza_ctrl.color.color_val }};
+        } .color-hv-bd:hover { border-color: {{ request.session.kouza_ctrl.color.color_val }};
+        }
+        .color-a{ color: {{ request.session.kouza_ctrl.color.color_val }};
+        } .color-a:hover { color: {{ request.session.kouza_ctrl.color.color_val }};
+        } .color-a:focus { color: {{ request.session.kouza_ctrl.color.color_val }};
+        }
+        .color-hv-a:hover { color: {{ request.session.kouza_ctrl.color.color_val }};
+        } .color-hv-a:focus { color: {{ request.session.kouza_ctrl.color.color_val }};
+        }
+*/

@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block center %}
+<link rel="stylesheet" href="{% static 'vcr/online/index.css' %}"/>
+<input type="hidden" id="def_kuukann" value="{{ request.session.kouza_.kouza_ctrl.def_kuukann }}">
+<div class="ui grid" style="height: 100%;">
+    <div class="ui column" style="height: 100%;">
+        <div class="color-grandient-bg index-bg-in">
+            <div class="index-bg-out">
+                <div class="ui center aligned container">
+                    <h1 class="ui massive header txt-white" 
+                        style="margin-top: 120px;color:white;
+                               text-shadow: -1px 0px 2px 0px rgba(102, 102, 102, 1);">
+                        相信VcrT，会给你最好的，留住美丽的
+                        <a class="txt-underline a-white" href="javascript:void(0);"
+                            data-tooltip="域，是储存相册的空间的雅称~" data-inverted=""
+                            style="text-decoration: underline;">
+                            域
+                        </a>
+                    </h1>
+                    <p style="margin-top: 80px;color:whitesmoke;
+                              text-shadow: 0px 0px 2px -1px rgba(102, 102, 102, 0.618);">Version 0.6.9</p>
+                    <div class="center aligned mr-t-big">
+                        <button class="ui big button" onclick="go_in_kuukann();" >
+                            进入我的域
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui grid" id="use" style="display: none;">
+    <!-- 1 , 15 -->
+    <div class="ui one wide column"></div><div class="ui fifteen wide column"></div>
+    <!-- 2 , 14 -->
+    <div class="ui two wide column"></div><div class="ui fourteen wide column"></div>
+    <!-- 3 , 13 -->
+    <div class="ui three wide column"></div><div class="ui thirteen wide column"></div>
+    <!-- 4 , 12 -->
+    <div class="ui four wide column"></div><div class="ui twelve wide column"></div>
+    <!-- 5 , 11 -->
+    <div class="ui five wide column"></div><div class="ui eleven wide column"></div>
+    <!-- 6 , 10 -->
+    <div class="ui six wide column"></div><div class="ui ten wide column"></div>
+    <!-- 7 , 9 -->
+    <div class="ui seven wide column"></div><div class="ui nine wide column"></div>
+    <!-- 8 , 16 -->
+    <div class="ui eight wide column"></div><div class="ui sixteen wide column"></div>
+</div>
+{% endblock center %}

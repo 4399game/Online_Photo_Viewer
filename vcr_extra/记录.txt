@@ -1,0 +1,119 @@
+﻿VcrT 图片处理：
+    1. url请求时压缩
+        使用url请求图片经过view, 功能: filter, 进行图片压缩，后将压缩后的图片
+        存入Httpresponse中，前台显示的就为已经压缩好的图片，
+        第一次以后，Django将从缓存中取这张压缩后的图片。
+
+    2. 上传时 后台使用celery异步压缩大图，然后前台使用ajax发送请求，是否
+
+VcrT celery:
+    启动：
+        python manage.py celery worker --loglevel=info
+
+VcrT Haystack:
+    功能:
+        搜索 pic 模型 name 字段
+        搜索 img 模型 tiny_img 字段
+    重建索引:
+        python manage.py rebuild_index
+
+VcrT 回收站:
+    备注:
+        status = Flase 表示不在回收站中
+    前提:
+        在某用户下
+    回收内容:
+        被删除的相册、被删除的图片、未绑定的原图
+    回收操作:
+        删除相册:
+            把pic状态改为False,
+        删除图片:
+            把image的状态改为False, 并把该项图片数据添加到标志为img的station表中， 并且判断是否有原图，如果有，
+            将该原图添加到未绑定原图中
+        未绑定的原图:
+            image状态为False的原图，删除图片时判断是否有原图，如果有，将原图数据存入标志为full_img的station表中
+            如果没有，则不需任何操作
+    查询操作:
+        查询Station表
+        相册: 将station表里添加的相册查询出来
+        图片: 将station表里的相册里的状态为True的图片查出来的结果 + station里标志为img的图片查出来的结果
+        原图: 将station表里的原图查出来
+
+VcrT 回收机制时间计算:
+    DateTimeField字段增加或减少一个月:
+        import datetime
+        from dateutil.relativedelta import relativedelta
+        # 增加一个月
+        DateTimeField = datetime.date.today() - relativedelta(months = -1)
+        
+    DateTimeField字段的天:
+        day = int(DateTimeField.strftime('%d'))
+
+    DateTimeField字段在 前台 计算与当前时间相差的天数:
+        value = {{ DateTimeField|date:'Y-m-d H:i:s' }}
+        d1 = datetime.datetime.strptime(value, '%Y-%m-%d %H:%M:%S')
+        now = datetime.datetime.now()
+        dat = d1 - now
+        return dat.days
+
+    DateTimeField字段在 后台 计算与当前时间相差的天数:
+        d1 = DateTimeField = timezone.now()
+        now = timezone.now()
+        dat = d1 - now
+        return dat.days
+
+    Python两日期相减:
+        value = '2012-03-05 17:41:02'
+        d1 = datetime.datetime.strptime(value, '%Y-%m-%d %H:%M:%S')
+        d2 = datetime.datetime.now()
+        dat = d1 - d2
+        print('相差天数', dat.days)
+
+VcrT 用户的Style: 
+    style
+    1、元素颜色:
+        red、orange、yellow、olive
+        teal、blue、violet、purple
+        pink、brown、grey、black   
+        默认 blue
+    2、调节颜色:
+        粉色、蓝色、黄色、绿色
+        红色、水绿、金色、浅绿
+        橙色、靛蓝、褐色、浅黄
+        深红、紫色、灰色、浅灰
+        默认 rgba(255, 174, 200, 1)
+    3、网站名称:
+        默认 VcrT
+    4、背景图片:
+        默认 Vcr婷的背景
+
+VcrT 用户设置:
+    setting
+    1、浏览设置:
+	    省流模式、正常模式
+	    默认 正常模式
+    2、下载设置:
+	    平衡、原图
+	    默认 平衡
+    3、偏好设置:
+	布局模式:
+	    Max、Block、GridFooter
+    界面是否折叠:
+        默认 False
+    4、压缩设置:
+        压缩阈值
+            默认 1380
+
+VcrT 安全性:
+    safe
+    1、密码管理:
+        空间密码、个人中心密码
+    2、账户验证:
+        邮箱验证、手机号验证
+    3、加密设置:
+        1      2      3        4       5    6
+        回收站、个性化、个人中心、安全性、设置、全局搜索
+    4、密保问题:
+        你最喜欢谁，虚拟 or 现实的人物当中？
+        自定义
+

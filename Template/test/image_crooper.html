@@ -1,0 +1,248 @@
+<!DOCTYPE html> 
+{% load staticfiles %}
+<html lang="en"> 
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+        <title>
+            Crooper
+        </title>
+        <link rel="stylesheet" href="{% static 'vcr/semantic_ui/semantic.min.css' %}"/>
+    </head>
+    <body>
+        <!-- Jquery -->
+        <script type="text/javascript" src="{% static 'vcr/js/jquery.min.js' %}"></script>
+        <!-- Crooper -->
+        <link rel="stylesheet" href="{% static 'plugin/cropper/cropper.css' %}"/>
+        <script type="text/javascript" src="{% static 'plugin/jquery-cropper/jquery-cropper.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'plugin/cropper/cropper.min.js' %}"></script>
+        <!-- Css of mine -->
+        <style type="stylesheet">
+            #image{
+                max-width: 100%;
+            }
+            #small{
+                width: 120px;
+                height: 120px;
+                overflow: hidden;
+                border: 1px dashed pink;
+            }
+        </style>
+        <!-- Html -->
+        <div class="ui container">
+            <div class="ui two column doubling stackable grid" style="margin-top: -10px;">
+                <div class="ui thirteen wide column">
+                    <img class="ui fluid image" id="image" src="{% static 'img/site/crooper.jpg' %}">
+                </div>
+                <div class="ui three wide column">
+                    <button class="ui button right floated" id='destroy'>退出剪裁模式</button>
+                    <button class="ui button right floated" id="reset">恢复为初始状态</button>
+                    <button class="ui button right floated" id="clear">清除剪裁框</button>
+
+                    <button class="ui button right floated" id='replace'>替换要剪裁的图片</button>
+
+                    <button class="ui button right floated" id='disable'>锁定剪裁框</button>
+                    <button class="ui button right floated" id='enable'>解锁剪裁框</button>
+                    
+                    <button class="ui button right floated" id='movex'>左移图片1px</button>
+                    <button class="ui button right floated" id='movey'>上移图片1px</button>
+
+                    <button class="ui button right floated" id='zoom'>放大图片</button>
+                    <button class="ui button right floated" id='rotate'>旋转45度</button>
+                    <button class="ui button right floated" id='scaleX'>水平翻转</button>
+                    <button class="ui button right floated" id='scaleXback'>水平翻转回来</button>
+                    <button class="ui button right floated" id='setAspectRatio'>改变剪裁框比例</button>
+                    <button class="ui button right floated" id='getData'>打印图像的cropper参数信息</button>
+
+                    <button class="ui button right floated" id='getCroppedCanvas'>打印剪裁后的图片数据</button>
+                    <!-- 截图效果展示 -->
+                    <div class="" id="small">
+
+                    </div>
+                </div>
+                <div class="sixteen wide column" id="cavans">
+                </div>
+            </div>
+        </div>
+        <!-- Javascript: cropper -->
+        <script type="text/javascript">
+            var $image = $('#image');
+            $image.cropper({
+                aspectRatio: 1 / 1,
+                preview:"#small", // 指定 显示 截图的容器
+                responsive: true, // 在调整窗口大小的时候 重新 渲染cropper。def: True
+                restore: true, // 在调整窗口大小后 恢复 裁剪的区域。def: True
+                checkCrossOrigin: true, // 检查 当前图像是否为跨域图像。def: True
+                checkOrientation: true, // 检查 当前图像的Exif定向信息。def: True
+
+                guides: true, // 显示 在裁剪框中的虚线。def: True
+                modal: true, // 显示 图片上的黑色遮罩层并位于裁剪框下面。def: True
+                center: true, // 初始时裁剪框位于图片正中心。def: True
+                highlight: true, // 在裁剪框上方显示白色的区域(突出裁剪框)。def: True
+                background: true, // 显示容器的网格背景。（就是后面的马赛克）。def: True
+                autoCrop: true, // 当初始化时，显示裁剪框。def: True
+                autoCropArea: 0.8, // 定义自动裁剪面积大小(百分比)和图片进行对比。def: 0.8
+
+                movable: true, // 是否允许 可以移动后面的图片。def: True
+                rotatable: true, // 是否允许 旋转图像。def: True
+                scalable: true, //是否允许 缩放图像。def: True
+                zoomable: true, // 是否允许 放大图像。def: True
+
+                zoomOnTouch: true, // 是否可以通过拖动触摸来放大图像。def: True
+                zoomOnWheel: true, // 是否可以通过移动鼠标来放大图像。def: True
+                wheelZoomRatio: 0.1, // 用鼠标移动图像时，定义缩放比例。def: 0.1
+                cropBoxMovable: true, // 是否通过拖拽来移动剪裁框。def True
+                cropBoxResizable: true, // 是否通过拖动来调整剪裁框的大小。def True
+                toggleDragModeOnDblclick: true, // 当点击两次时可以在“crop”和“move”之间切换拖拽模式。def: True
+
+                minContainerWidth: 200, // 容器的最小宽度。def: 200
+                minContainerHeight: 100, // 容器的最小高度。def: 100
+                minCanvasWidth: 0, // canvas的最小宽度。def: 0
+                minCanvasHeight:0 , // canvas的最小高度。def: 0
+                minCropBoxWidth: 0, // 裁剪层的最小宽度。def: 0
+                minCropBoxHeight: 0, // 裁剪层的最小高度。def: 0
+
+                ready: null, // 插件准备完成执行的函数（只执行一次）。def: null
+                cropstart: null, // 剪裁框开始移动执行的函数。def: null
+                cropmove: null, // 剪裁框移动时执行的函数。def: null
+                cropend: null, // 剪裁框移动结束执行的函数。def: null
+                crop: null, // 剪裁框发生变化执行的函数。def: null
+                zoom: null, // 剪裁框缩放的时候执行的函数。def: null
+                crop: function(event) {
+                    
+                }
+            });
+            // Get the Cropper.js instance after initialized
+            var cropper = $image.data('cropper');
+        </script>
+        <!-- Javascript: buttom -->
+        <script type="text/javascript">
+            var $image = $('#image');
+            // 恢复为初始状态，剪裁框数据要重新设置
+            $("#reset").on("click", function () {
+                $image.cropper('reset');
+            })
+            // 清除剪裁框
+            $("#clear").on("click", function () {
+                $image.cropper('clear');
+            })
+            // 替换要剪裁的图片，重构剪裁框
+            $("#replace").on("click", function () {
+                $image.cropper('replace',"./images/111.jpeg",true );// 参数 true会使图片失真，改为false则不会
+            })
+            // 解锁剪裁框
+            $("#enable").on("click", function () {
+                $image.cropper('enable');
+            })
+            // 锁定剪裁框
+            $("#disable").on("click", function () {
+                $image.cropper('disable');
+            })
+            // 退出剪裁模式
+            $("#destroy").on("click", function () {
+                $image.cropper('destroy');
+            })
+            // 使用按钮 移动 图片
+            $("#movex").on("click", function () {
+                $image.cropper('move', 1, 0); // offset-x: 1px
+            })
+            $("#movey").on("click", function () {
+                $image.cropper('move', 0, -1);// offset-y: -1px
+            })
+            // 使用按钮 放大 图片
+            $("#zoom").on('click', function () {
+                $image.cropper('zoom', 0.1);
+                $image.cropper('zoom', -0.1);
+            })
+            // 使用按钮 旋转 图片
+            $("#rotate").on('click', function () {
+                $image.cropper('rotate', 45); // 顺时针 45度
+            })
+            // 使用按钮 翻转 图片
+            $('#scaleX').on('click', function () {
+                $image.cropper('scaleX', -1); // 水平
+                // $('#image').cropper('scaleY', -1); // 垂直
+                // $('#image').cropper('scale', -1, 1); // 水平方向翻转
+                // $('#image').cropper('scale', 1, -1); // 垂直方向翻转
+                // $('#image').cropper('scale', -1, -1); // 水平垂直方向翻转
+            })
+            $('#scaleXback').on('click', function () {
+                $('#image').cropper('scale', 1, 1); // 水平方向翻转回来
+            })
+            // 改变 剪裁框 比例
+            $("#setAspectRatio").on("click", function () {
+                $('#image').cropper('setAspectRatio', 1/1); // 1/1 or 16/9 or more
+            })
+            // 输出当前图片 对比 原始图片的 信息参数
+            $("#getData").on('click', function () {
+                var data = $image.cropper('getData', true); // true则获取所有数据。def: False
+                console.info(data);
+                /*Object； 
+                    - x裁切框距离左边的距离 
+                    - y裁切框距离顶部的距离 
+                    - width裁切框的宽度 
+                    - height裁切框的高度 
+                    - rotate裁切框的旋转的角度 
+                    - scaleX缩放图像的横坐标 
+                    - scaleY缩放图像的纵坐标 
+                */
+            })
+            // 用参数设置 图片的 Object: x/y/w/h/r/s
+            $("#setData").on("click", function () {
+                $image.cropper('setData',{width:200,height:100});
+            })
+            // 输出cropper最外层容器的数据
+            $("#getContainerData").on("click", function () {
+                var c = $image.cropper('getContainerData', );
+                console.info(c);
+            })
+            // 输出 剪裁框 的Object数据
+            $("#getCropBoxData").on("click", function () {
+                var data = $image.cropper('getCropBoxData');
+                console.info(data);
+                /*Object:
+                    - left剪切框距离左边的距离 
+                    - top剪切框距离顶部的距离 
+                    - width剪切框的宽度 
+                    - height剪切框的高度
+                s*/
+            })
+            // 设置 剪裁框 的Object数据
+            $("#setCropBoxData").on("click", function () {
+                var simple_data = {width:200,height:100};l
+                $image.cropper('setCropBoxData', simple_data);
+            })
+            // 画一张剪裁的图片。如果没有剪裁，则返回一个绘制整个im的画布
+            // getCroppedCanvas([options]) 
+            /*Object :
+                - width 输出Canvas的宽度 
+                - height 输出Canvas的高度 
+                - minWidth 输出Canvas的最小宽度；默认值是0 
+                - minHeight 输出Canvas的最小高度；默认值是0 
+                - maxWidth 输出Canvas的最大宽度；默认值是Infinity（无穷大） 
+                - maxHeight 输出Canvas的最大高度；默认值是Infinity（无穷大） 
+                - fillColor 在输出画布Canvas中填充任何alpha的颜色，默认值是透明的 
+                - imageSmoothingEnabled 如果图像被设置为平滑(true，默认)或不设置(false)。 
+                - imageSmoothingQuality 设置图像的质量，一个“low”(默认)、“medium”或“high”
+            */
+            $("#getCroppedCanvas").on("click", function () {
+                console.log($image.cropper('getCroppedCanvas'));;
+
+                var cas = $image.cropper('getCroppedCanvas');
+
+                var base64url = cas.toDataURL('image/jpeg'); //生成base64图片的格式
+
+                cas.toBlob(function (e) {
+                    console.log(e);  //生成Blob的图片格式
+                    // 在这里对图片进行上传
+                })
+
+                $('#cavans').html(cas)  //在body显示出canvas元素
+            })
+        </script>
+        <!-- Semantic -->
+        <script type="text/javascript" src="{% static 'vcr/semantic_ui/semantic.min.js' %}"></script>
+    </body>
+</html>

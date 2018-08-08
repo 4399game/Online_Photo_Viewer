@@ -1,0 +1,174 @@
+{% extends 'base/base_extra.html' %}
+{% load staticfiles %}
+{% load vcr_tag %}
+{% block vcr_css %}
+    <link rel="stylesheet" href="{% static 'vcr/online/option.css' %}"/>
+{% endblock vcr_css %}
+{% block center %}
+<script type="text/javascript">
+    var all_data_list = [];
+    var old_html_list = [];
+    var data_list = [];
+    function choise(index) {
+        var img_div_ = $('#img_div_' + index);
+        var day_l_ = $('#day_l_' + index);
+        img_div_.on('click', function () {
+            var i = $.inArray(index, data_list);
+            if (i == -1){
+                data_list.push(index);
+                change_choise_bar(index, true);
+            }
+            else{
+                data_list.splice(i, 1);
+                var i = $.inArray(index, all_data_list);
+                change_choise_bar(index, false);
+            }
+        });
+        old_html_list.push(day_l_.html());
+    }
+    function change_choise_bar(index, flag){
+        var cover = $('#cover_' + index);
+        if (flag){
+            cover.addClass('be_choise'); }
+        else{
+            cover.removeClass('be_choise'); }
+    }
+</script>
+<div class="ui top sidebar menu" id="menu_sidebar">
+    <a class="item" href="{{ previous_url|default:'/' }}">返回</a>
+</div>
+<div class="pusher">
+    <div class="ui container">
+        <h2 class="left aligend" style="margin-top: 10px;">回收站</h2>
+        <div class="ui two column doubling stackable relaxed divided grid" style="margin-top: 5px;">
+            <div class="ui four wide column">
+                <div class="ui vertical fluid menu">
+                    <a href="javascript:void(0);" id="menu_pic_a" class="item" onclick="go_station_in('pic');">
+                        相册
+                        <div class="ui label" id="station_pic_num">{{ request.session.kouza_.get_station_pic_count }}</div>
+                    </a>
+                    <a href="javascript:void(0);" id="menu_img_a" class="item" onclick="go_station_in('img');">
+                        图片
+                        <div class="ui label" id="station_img_num">{{ request.session.kouza_.get_station_img_count }}</div>
+                    </a>
+                    <div class="item" id="menu_search_a">
+                        <div class="ui transparent icon input" style="width: 100%;">
+                            {% if search_text is not None %}
+                                <input type="text" id="s_s_input" placeholder="{{ search_text }}">
+                            {% else %}
+                                <input type="text" id="s_s_input" placeholder="搜索一下...">
+                            {% endif %}
+                        </div>
+                        <i class="search icon" id="search_icon" style="margin-top: -15px;"></i>
+                    </div>
+                </div>
+                <div class="station_bt_btn">
+                    <a class="ui basic icon floating dropdown button" id="bt_btn" type="button">
+                        <i class="circle notched icon"></i>
+                        <div class="menu">
+                            <div class="item fan_choise">
+                                <i class="vertically flipped clockwise rotated check circle outline icon"></i>
+                                反向选择
+                            </div>
+                            <div class="item" id="to_top">
+                                <i class="angle up icon"></i>
+                                跳至顶部
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="ui twelve wide column">
+                {% if station_flag == 'pic' %}
+                <div class="ui link divided items" id="station_items">
+                    {% for station in station_list %}
+                        <div class="item" id="station_item_{{ station.id }}">
+                            <div class="ui small image">
+                                <img src="{{ MEDIA_URL }}{{ station.pic.image }}">
+                            </div>
+                            <div class="content text right aligned">
+                                <div class="header">{{ station.pic.name|defnull:'（未命名）' }}</div>
+                                <div class="meta">
+                                    <span class="cinema">剩余时间：{{ station.unshow_date|date:'Y-m-d H:i:s'|station_day|safe }}</span>
+                                </div>
+                                <div class="description">
+                                    <div class="meta">
+                                        <span class="cinema">删除时间：{{ station.false_date|date:'Y-m-d' }}</span>
+                                    </div>
+                                    <span class="ui teal right floated" style="margin-top: -10px;" onclick="station_back({{ station.id }}, '{{ station.station_flag }}', {{ station.pic.get_img_count }});">还原</span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% elif station_flag == 'img' %}
+                    <div class="ui grid" id="imgs_grid">
+                    </div>
+                    <input type="hidden" id="help_roll" value="">
+                {% elif station_flag == 'search' %}
+                    <input type="hidden" id="search_flag" value="{{ search_flag }}">
+                    {% if search_flag == 'pic' %}
+                        <div class="ui link divided items" id="station_items">
+                        {% for station in station_list %}
+                            <div class="item" id="station_item_{{ station.id }}">
+                                <div class="ui tiny image">
+                                    <img src="{{ MEDIA_URL }}{{ station.pic.image }}">
+                                </div>
+                                <div class="content">
+                                    <div class="header">{{ station.pic.name|defnull:'（未命名）' }}</div>
+                                    <div class="meta">
+                                        <span class="cinema">剩余时间：{{ station.unshow_date|date:'Y-m-d H:i:s'|station_day|safe }}</span>
+                                    </div>
+                                    <div class="description">
+                                        <div class="meta">
+                                            <span class="cinema">删除时间：{{ station.false_date|date:'Y-m-d' }}</span>
+                                        </div>
+                                        <span class="ui teal right floated" style="margin-top: -10px;" onclick="station_back({{ station.id }}, '{{ station.station_flag }}', {{ station.pic.get_img_count }});">还原</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                        {% elif search_flag == 'img' %}
+                        <div class="ui grid" id="imgs_grid">
+                            {% for station in station_list %}
+                            <div class="ui four wide column" id="col_div_{{ station.id }}">
+                                <div class="cover" id="cover_{{ station.id }}">
+                                    <div class="img_div" id="img_div_{{ station.id }}" style='background-image: url("{{ MEDIA_URL }}{{ station.img.tiny_img }}");background-position: center center;background-size: cover;width: 100%;height: 100%;'
+                                        data-content="">
+                                    </div>
+                                    <div class="the_day_l" id="day_l_{{ station.id }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                var index = {{ station.id }};
+                                $('#col_div_' + index).height($('#col_div_' + index).width());
+                                choise(index);
+                                all_data_list.push(index);
+                            </script>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+        </div>
+        <div id="msg_div">
+        </div>
+    </div>
+</div>
+<div class="ui top fixed menu s" id="choise_bar">
+    <div class="item" onclick="open_menu_sidebar();">
+        <i class="sidebar icon"></i>
+        <p class="">菜单</p>
+    </div>
+    <a class="item right floated">回收站</a>
+</div>
+{% endblock center %}
+{% block vcr_js %}
+<script type="text/javascript" src="{% static 'vcr/online/station.js' %}"></script>
+    <script type="text/javascript">
+        change_grid('eight');
+    </script>
+{% endblock vcr_js %}
